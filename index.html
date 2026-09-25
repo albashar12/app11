@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppVault</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>AppVault</h1>
+        <button id="lockBtn" class="btn-logout hidden" onclick="lockApp()">Lock App</button>
+    </header>
+
+    <div class="container">
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="card hidden">
+            <h2>Vault Setup</h2>
+            <p class="subtitle">Set your Telegram Bot Token and Chat ID.</p>
+            <p style="font-size: 0.8rem; color: var(--success); margin-bottom: 15px;">Note: Default app password is 1234</p>
+            
+            <div class="form-group">
+                <label>Telegram Bot Token</label>
+                <input type="password" id="botToken" placeholder="123456789:ABCdefGhIJKlm...">
+            </div>
+            <div class="form-group">
+                <label>Chat ID / User ID</label>
+                <input type="text" id="chatId" placeholder="987654321">
+            </div>
+            
+            <button class="btn-primary" onclick="setupVault()">Save & Connect</button>
+        </div>
+
+        <!-- Home / Login Screen -->
+        <div id="homePage" class="card hidden">
+            <h2 class="title-center">Vault Access</h2>
+            <p class="subtitle title-center">Access your secure vault</p>
+            
+            <div class="form-group">
+                <input type="password" id="loginPassword" placeholder="Enter Password (Default: 1234)">
+            </div>
+            <button class="btn-primary" onclick="unlockVault()">Unlock Vault</button>
+            <span class="forgot-toggle" onclick="toggleRecovery()">Forgot Password?</span>
+
+            <div id="recoverySection" class="recovery-box">
+                <div class="question-box">Security Question: What is the name of your first pet?</div>
+                <div class="form-group">
+                    <input type="text" id="securityAnswer" placeholder="Enter answer">
+                </div>
+                <button class="btn-primary btn-success" onclick="checkSecurityAnswer()">Recover & Access</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboardPage" class="hidden">
+            
+            <!-- Upload Section -->
+            <div class="card">
+                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                    <h3 class="upload-title">Encrypted Upload (Telegram Masked)</h3>
+                    <p class="upload-subtitle">Files will be hidden on Telegram and only visible here</p>
+                    <input type="file" id="fileInput" class="hidden" multiple onchange="uploadFiles(event)">
+                </div>
+                <p id="syncStatus" class="status-text"></p>
+            </div>
+
+            <!-- Vault Gallery -->
+            <div class="card">
+                <div class="vault-header">
+                    <h3>Your Encrypted Vault Files</h3>
+                    <span class="badge" onclick="fetchVaultFiles()">Refresh</span>
+                </div>
+                <div id="fileGrid" class="file-grid">
+                    <!-- Files will load here -->
+                </div>
+            </div>
+
+            <!-- Settings / Password Change -->
+            <div class="card">
+                <h3>Settings</h3>
+                <p class="subtitle">Change your app login password</p>
+                <div class="form-group">
+                    <input type="password" id="newPassword" placeholder="Enter new password">
+                </div>
+                <button class="btn-primary" onclick="changePassword()" style="background-color: var(--border);">Update Password</button>
+                <p id="pwdStatus" class="status-text"></p>
+            </div>
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
